@@ -3,10 +3,10 @@ module Concerns::Memorable
   module ClassMethods
 
     def create(name)
-      object = self.new(name)
-      object.save
+      obj = self.new(name)
+      obj.save
 
-      object
+      obj
     end
 
     def destroy_all
