@@ -1,17 +1,20 @@
-class Series
+class Artist
   include Concerns::Memorable::InstanceMethods
   extend Concerns::Memorable::ClassMethods
 
   extend Concerns::Findable
 
-  attr_accessor :name, :start_date, :end_date, :status, :stories, :url
+  attr_accessor :name, :issues
 
   @@all = []
 
   def initialize(name)
     super
     @issues = []
-    @status = "ongoing"
+  end
+
+  def stories
+    self.issues.collect {|issue| issue.story}.uniq
   end
 
   def self.all

@@ -1,0 +1,3 @@
+require_relative "../config/environment.rb"
+
+Scraper.scrape_series("http://starwars.wikia.com/wiki/Category:Star_Wars_(Marvel)")
