@@ -1,3 +1,9 @@
 require_relative "../config/environment.rb"
 
-Scraper.scrape_series("http://starwars.wikia.com/wiki/Category:Star_Wars_(Marvel)")
+Scraper.scrape_series("http://starwars.wikia.com/wiki/Category:Marvel_Comics")
+
+Series.all.each do |serie|
+  Scraper.scrape_issues(serie.url)
+end
+
+binding.pry
