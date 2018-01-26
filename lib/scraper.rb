@@ -31,7 +31,7 @@ class Scraper
 
     attributions.each do |attrib|
       attrib_type = attrib.css("h3.pi-data-label").text
-      attrib_value = attrib.css("div.pi-data-value a").text
+      attrib_value = attrib.css("div.pi-data-value a").text.sub(/\[.*\]/, "")
 
       unless attrib.css("div.pi-data-value a").empty?
         attrib_link = attrib.css("div.pi-data-value a").attribute("href").value
