@@ -1,9 +1,11 @@
 require_relative "../config/environment.rb"
 
-Scraper.scrape_series("http://starwars.wikia.com/wiki/Category:Marvel_Comics")
+BASE_PATH = "http://starwars.wikia.com"
 
-Series.all.each do |serie|
-  Scraper.scrape_issues(serie.url)
+Scraper.scrape_series("/wiki/Category:Marvel_Comics")
+
+Series.all.each do |series|
+  Scraper.scrape_issues(series)
 end
 
 binding.pry

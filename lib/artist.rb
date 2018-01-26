@@ -4,13 +4,19 @@ class Artist
 
   extend Concerns::Findable
 
-  attr_accessor :name, :issues
+  attr_accessor :name, :issues, :path
 
   @@all = []
 
-  def initialize(name)
+  def initialize(name, path)
     super
     @issues = []
+  end
+
+  def add_issue(issue)
+    artist_var = self.class.to_s.sub("Artists::", "").downcase
+    issue.send("#{artist_var}") || issue.send("#{artist_var}=", self)
+    super
   end
 
   def stories

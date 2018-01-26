@@ -4,14 +4,18 @@ class Series
 
   extend Concerns::Findable
 
-  attr_accessor :name, :start_date, :end_date, :status, :stories, :url
+  attr_accessor :name, :start_date, :end_date, :status, :stories, :path, :issues
 
   @@all = []
 
-  def initialize(name)
+  def initialize(name, path)
     super
     @issues = []
-    @status = "ongoing"
+  end
+
+  def add_issue(issue)
+    issue.series ||= self
+    super
   end
 
   def self.all

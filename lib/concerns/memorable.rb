@@ -2,8 +2,8 @@ module Concerns::Memorable
 
   module ClassMethods
 
-    def create(name)
-      obj = self.new(name)
+    def create(name, path)
+      obj = self.new(name, path)
       obj.save
 
       obj
@@ -17,12 +17,17 @@ module Concerns::Memorable
 
   module InstanceMethods
 
-    def initialize(*args)
-      self.name = args[0]
+    def initialize(name, path)
+      self.name = name
+      self.path = path
     end
 
     def save
       self.class.all << self
+    end
+
+    def add_issue(issue)
+      self.issues << issue unless self.issues.include?(issue)
     end
 
   end
