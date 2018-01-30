@@ -14,10 +14,8 @@ class Scraper
               "div.mw-content-ltr ul li a")
 
     issues.each do |issue|
-      if issue.text.match?(/Star\sWars\s\d+.*/)
-        Issue.find_or_create_by_name(issue.text.strip, issue["href"]).
-              series = series
-      end
+      Issue.find_or_create_by_name(issue.text.strip, issue["href"]).
+                                                                series = series
     end
   end
 
@@ -31,7 +29,7 @@ class Scraper
 
     attributions.each do |attrib|
       attrib_type = attrib.css("h3.pi-data-label").text
-      attrib_value = attrib.css("div.pi-data-value a").text.sub(/\[.*\]/, "")
+      attrib_value = attrib.css("div.pi-data-value").text.sub(/\[.*\]/, "")
 
       unless attrib.css("div.pi-data-value a").empty?
         attrib_link = attrib.css("div.pi-data-value a").attribute("href").value
@@ -51,9 +49,9 @@ class Scraper
                           attrib_value, attrib_link)
 
       elsif attrib_type == "Publication date"
-        issue.pub_date = attrib.css("div.pi-data-value a").text
+        issue.pub_date = attrib_value.sub(/(\d{4})$/, ", \\1")
       elsif attrib_type == "Pages"
-        issue.pages = attrib.css("div.pi-data-value a").text
+        issue.pages = attrib_value
       end
 
     end

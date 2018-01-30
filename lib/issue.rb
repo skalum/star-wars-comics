@@ -4,13 +4,18 @@ class Issue
 
   extend Concerns::Findable
 
-  attr_accessor :name, :series, :path, :writer, :penciller, :letterer,
-                :colorist, :pub_date, :pages
+  attr_accessor :name, :path, :pub_date, :pages
+
+  attr_reader :series, :writer, :penciller, :letterer, :colorist
 
   @@all = []
 
   def initialize(name, path)
     super
+    @writer = []
+    @penciller = []
+    @letterer = []
+    @colorist = []
     Scraper.scrape_issue_info(self)
   end
 

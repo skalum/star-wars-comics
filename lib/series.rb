@@ -4,7 +4,7 @@ class Series
 
   extend Concerns::Findable
 
-  attr_accessor :name, :start_date, :end_date, :status, :stories, :path, :issues
+  attr_accessor :name, :path, :issues
 
   @@all = []
 
