@@ -49,7 +49,7 @@ class Scraper
                           attrib_value, attrib_link)
 
       elsif attrib_type == "Publication date"
-        issue.pub_date = attrib_value.sub(/(\d{4})$/, ", \\1")
+        issue.pub_date = attrib_value
       elsif attrib_type == "Pages"
         issue.pages = attrib_value
       end

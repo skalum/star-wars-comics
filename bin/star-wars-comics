@@ -1,3 +1,5 @@
+
+
 require_relative "../config/environment.rb"
 
 BASE_PATH = "http://starwars.wikia.com"
