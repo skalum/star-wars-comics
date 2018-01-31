@@ -53,7 +53,6 @@ class Artist
       puts "#{collab.name}: #{times} times" unless times < 2
     end
 
-    binding.pry
   end
 
   def self.all
