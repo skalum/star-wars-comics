@@ -12,10 +12,10 @@ class Issue
 
   def initialize(name, path)
     super
-    @writer = []
-    @penciller = []
-    @letterer = []
-    @colorist = []
+    @writer = Artists::Writer.new("none")
+    @penciller = Artists::Penciller.new("none")
+    @letterer = Artists::Letterer.new("none")
+    @colorist = Artists::Colorist.new("none")
     Scraper.scrape_issue_info(self)
   end
 

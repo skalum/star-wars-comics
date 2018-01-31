@@ -8,7 +8,7 @@ class Series
 
   @@all = []
 
-  def initialize(name, path)
+  def initialize(name, path = "")
     super
     @issues = []
   end
@@ -16,6 +16,10 @@ class Series
   def add_issue(issue)
     issue.series ||= self
     super
+  end
+
+  def all
+    self.issues
   end
 
   def self.all

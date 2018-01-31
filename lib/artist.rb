@@ -8,7 +8,7 @@ class Artist
 
   @@all = []
 
-  def initialize(name, path)
+  def initialize(name, path = "")
     super
     @issues = []
   end

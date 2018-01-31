@@ -3,20 +3,51 @@ def list_all_series
     puts "#{i+1}. #{series.name}"
   end
 
-  input = get_input("a series", 1, Series.all.length)
-  list_issues_for_series(Series.all[input-1])
+  loop do
+    input = get_input(1, Series.all.length)
+
+    if input.class == Integer
+      list_issues_for_series(Series.all[input-1])
+      list_all_series
+      break
+    elsif input == "back"
+      break
+    elsif Series.find_by_name(input) != nil
+      list_issues_for_series(Series.find_by_name(input))
+      list_all_series
+      break
+    else
+      puts "Could not find a series with that name. Please try again!"
+      sleep(1)
+    end
+  end
+
 end
 
 def list_issues_for_series(series)
-  puts "Getting issues..."
-  Scraper.scrape_issues(series)
-
   series.issues.each_with_index do |issue, i|
     puts "#{i+1}. #{issue.name}"
   end
 
-  input = get_input("an issue", 1, series.issues.length)
-  show_info_for_issue(series.issues[input-1])
+  loop do
+    input = get_input(1, series.issues.length)
+
+    if input.class == Integer
+      show_info_for_issue(series.issues[input-1])
+      list_issues_for_series(series)
+      break
+    elsif input == "back"
+      break
+    elsif Issue.find_by_name(input) != nil
+      show_info_for_issue(Issue.find_by_name(input))
+      list_issues_for_series(series)
+      break
+    else
+      puts "Could not find an issue with that name. Please try again!"
+      sleep(1)
+    end
+  end
+
 end
 
 def show_info_for_issue(issue)
@@ -29,20 +60,24 @@ def show_info_for_issue(issue)
   puts "    Penciller: #{issue.penciller.name}"
   puts "    Letterer: #{issue.letterer.name}"
   puts "    Colorist: #{issue.colorist.name}"
+  puts "\nPress \[Enter\] to return to the previous menu."
+  gets
 end
 
-def get_input(picking, min, max)
-  puts "\nEnter a number to choose #{picking}, or enter \"exit\" to quit."
+def get_input(min, max)
+  puts "Please enter a number or name, or type \"exit\" to quit."
 
   loop do
-    input = gets.strip.downcase
+    input = gets.strip
 
-    if input == "exit"
+    if input.downcase == "exit"
       exit
     elsif input.to_i.between?(min, max)
       return input.to_i
+    elsif !input.match?(/0+/) && input.to_i == 0
+      return input
     else
-      puts "Please enter a number between #{min} and #{max}, or type \"exit.\""
+      puts "Please enter a name, a number between #{min} and #{max}, or type \"exit.\""
     end
   end
 end
