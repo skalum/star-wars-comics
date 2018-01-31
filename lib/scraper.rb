@@ -1,11 +1,17 @@
 class Scraper
 
   def self.scrape_series(path)
-    titles =  Nokogiri::HTML(open(BASE_PATH + path)).css(
-              "div.CategoryTreeSection a")
+    categories = Nokogiri::HTML(open(BASE_PATH + path)).css("div.CategoryTreeItem a")
 
-    titles.each do |title|
-      Series.find_or_create_by_name(title.text.strip, title["href"])
+    categories.each do |category|
+      self.scrape_series(category["href"]) unless self.dont_include(category)
+    end
+
+    series_link = Nokogiri::HTML(open(BASE_PATH + path)).css("div.mw-content-ltr ul li:not(.interwiki-ru) a").first
+
+    unless series_link == nil
+      series = Series.find_or_create_by_name(series_link.text, series_link["href"])
+      series.desc = Nokogiri::HTML(open(BASE_PATH + series.path)).css("div#mw-content-text p").first.text.sub(/\[.*\]/, "")
     end
   end
 
@@ -57,4 +63,13 @@ class Scraper
     end
   end
 
+  private
+
+  def self.dont_include(category)
+    category.text == "Canon comic strips" ||
+      category.text == "Star Wars Rebels Magazine comics" ||
+      category.text == "Star Wars Adventures artists" ||
+      category.text == "Star Wars Adventures stories" ||
+      category.text == "Star Wars Adventures writers"
+    end
 end
