@@ -16,12 +16,17 @@ class Scraper
   end
 
   def self.scrape_issues(series)
-    issues =  Nokogiri::HTML(open(BASE_PATH + series.path)).css(
-              "div.mw-content-ltr ul li a")
+    issues =  Nokogiri::HTML(open(BASE_PATH + series.path)).css('td[style*="background-color:"] + td i a')
 
-    issues.each do |issue|
-      Issue.find_or_create_by_name(issue.text.strip, issue["href"]).
-                                                                series = series
+    binding.pry
+
+    last_issue = nil
+    issues.each do |issue_link|
+      issue = Issue.find_or_create_by_name(issue_link["title"], issue_link["href"])
+      issue.series = series
+      issue.last_issue = last_issue
+      issue.last_issue.next_issue = issue unless last_issue == nil
+      last_issue = issue
     end
   end
 

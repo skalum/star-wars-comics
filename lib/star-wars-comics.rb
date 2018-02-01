@@ -38,7 +38,7 @@ def list_issues_for_series(series)
       break
     elsif input == "back"
       break
-    elsif Issue.find_by_name(input) != nil
+    elsif Issue.find_by_name(input)
       show_info_for_issue(Issue.find_by_name(input))
       list_issues_for_series(series)
       break
@@ -56,10 +56,10 @@ def show_info_for_issue(issue)
   puts "  Publication date: #{issue.pub_date}"
   puts "  Pages: #{issue.pages}"
   puts "  Artists:"
-  puts "    Writer: #{issue.writer.name}"
-  puts "    Penciller: #{issue.penciller.name}"
-  puts "    Letterer: #{issue.letterer.name}"
-  puts "    Colorist: #{issue.colorist.name}"
+  puts "    Writer: #{issue.writer.name if issue.writer}"
+  puts "    Penciller: #{issue.penciller.name if issue.penciller}"
+  puts "    Letterer: #{issue.letterer.name if issue.letterer}"
+  puts "    Colorist: #{issue.colorist.name if issue.colorist}"
   puts "\nPress \[Enter\] to return to the previous menu."
   gets
 end

@@ -3,14 +3,8 @@ require_relative "../config/environment.rb"
 
 BASE_PATH = "http://starwars.wikia.com"
 
-puts "Welcome to Star Wars Comics! Type \"exit\" at any time to quit."
-# sleep(3)
-puts "Downloading Star Wars data..."
-Scraper.scrape_series("/wiki/Category:Marvel_Comics")
-Series.all.each do |series|
-  Scraper.scrape_issues(series)
-end
-puts "Done. Displaying all series below."
-# sleep(1)
+Scraper.scrape_series("/wiki/Category:Canon_comics")
 
-list_all_series
+Scraper.scrape_issues(Series.all[0])
+
+list_issues_for_series(Series.all[0])

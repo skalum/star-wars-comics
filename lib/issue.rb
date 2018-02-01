@@ -4,7 +4,7 @@ class Issue
 
   extend Concerns::Findable
 
-  attr_accessor :name, :path, :pub_date, :pages
+  attr_accessor :name, :path, :pub_date, :pages, :next_issue, :last_issue
 
   attr_reader :series, :writer, :penciller, :letterer, :colorist
 
@@ -12,10 +12,12 @@ class Issue
 
   def initialize(name, path)
     super
-    @writer = Artists::Writer.new("none")
-    @penciller = Artists::Penciller.new("none")
-    @letterer = Artists::Letterer.new("none")
-    @colorist = Artists::Colorist.new("none")
+    @writer = nil
+    @penciller = nil
+    @letterer = nil
+    @colorist = nil
+    @next_issue = nil
+    @last_issue = nil
     Scraper.scrape_issue_info(self)
   end
 
