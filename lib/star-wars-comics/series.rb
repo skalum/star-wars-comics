@@ -1,4 +1,4 @@
-class Series
+class StarWarsComics::Series
   include Concerns::Memorable::InstanceMethods
   extend Concerns::Memorable::ClassMethods
 

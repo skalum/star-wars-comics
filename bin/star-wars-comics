@@ -1,10 +1,5 @@
+#!/usr/bin/env ruby
 
-require_relative "../config/environment.rb"
+require_relative '../lib/star-wars-comics'
 
-BASE_PATH = "http://starwars.wikia.com"
-
-Scraper.scrape_series("/wiki/Category:Canon_comics")
-
-Scraper.scrape_issues(Series.all[0])
-
-list_issues_for_series(Series.all[0])
+StarWarsComics::CLI.new.call

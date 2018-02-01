@@ -1,4 +1,4 @@
-class Issue
+class StarWarsComics::Issue
   include Concerns::Memorable::InstanceMethods
   extend Concerns::Memorable::ClassMethods
 
@@ -18,7 +18,7 @@ class Issue
     @colorist = nil
     @next_issue = nil
     @last_issue = nil
-    Scraper.scrape_issue_info(self)
+    StarWarsComics::Scraper.scrape_issue_info(self)
   end
 
   def series=(series)

@@ -1,4 +1,4 @@
-class Artist
+class StarWarsComics::Artist
   include Concerns::Memorable::InstanceMethods
   extend Concerns::Memorable::ClassMethods
 
@@ -14,7 +14,7 @@ class Artist
   end
 
   def add_issue(issue)
-    artist_var = self.class.to_s.sub("Artists::", "").downcase
+    artist_var = self.class.to_s.sub("StarWarsComics::Artists::", "").downcase
     issue.send("#{artist_var}") || issue.send("#{artist_var}=", self)
     super
   end

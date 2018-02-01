@@ -1,4 +1,4 @@
-class Scraper
+class StarWarsComics::Scraper
 
   def self.scrape_series(path)
     categories = Nokogiri::HTML(open(BASE_PATH + path)).css("div.CategoryTreeItem a")
@@ -7,10 +7,10 @@ class Scraper
       self.scrape_series(category["href"]) unless self.dont_include(category)
     end
 
-    series_link = Nokogiri::HTML(open(BASE_PATH + path)).css("div.mw-content-ltr ul li:not(.interwiki-ru) a").first
+    series_link = Nokogiri::HTML(open(BASE_PATH + path)).css("div#mw-pages div a").first
 
     unless series_link == nil
-      series = Series.find_or_create_by_name(series_link.text, series_link["href"])
+      series = StarWarsComics::Series.find_or_create_by_name(series_link.text, series_link["href"])
       series.desc = Nokogiri::HTML(open(BASE_PATH + series.path)).css("div#mw-content-text p").first.text.sub(/\[.*\]/, "")
     end
   end
@@ -18,11 +18,9 @@ class Scraper
   def self.scrape_issues(series)
     issues =  Nokogiri::HTML(open(BASE_PATH + series.path)).css('td[style*="background-color:"] + td i a')
 
-    binding.pry
-
     last_issue = nil
     issues.each do |issue_link|
-      issue = Issue.find_or_create_by_name(issue_link["title"], issue_link["href"])
+      issue = StarWarsComics::Issue.find_or_create_by_name(issue_link["title"], issue_link["href"])
       issue.series = series
       issue.last_issue = last_issue
       issue.last_issue.next_issue = issue unless last_issue == nil
@@ -47,16 +45,16 @@ class Scraper
       end
 
       if attrib_type == "Writer"
-        issue.writer =  Artists::Writer.find_or_create_by_name(
+        issue.writer =  StarWarsComics::Artists::Writer.find_or_create_by_name(
                         attrib_value, attrib_link)
       elsif attrib_type == "Penciller"
-        issue.penciller = Artists::Penciller.find_or_create_by_name(
+        issue.penciller = StarWarsComics::Artists::Penciller.find_or_create_by_name(
                           attrib_value, attrib_link)
       elsif attrib_type == "Letterer"
-        issue.letterer =  Artists::Letterer.find_or_create_by_name(
+        issue.letterer =  StarWarsComics::Artists::Letterer.find_or_create_by_name(
                           attrib_value, attrib_link)
       elsif attrib_type == "Colorist"
-        issue.colorist =  Artists::Colorist.find_or_create_by_name(
+        issue.colorist =  StarWarsComics::Artists::Colorist.find_or_create_by_name(
                           attrib_value, attrib_link)
 
       elsif attrib_type == "Publication date"
