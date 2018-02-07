@@ -55,6 +55,10 @@ class StarWarsComics::Artist
 
   end
 
+  def self.sort_alpha
+    self.all.sort_by! {|artist| artist.name}
+  end
+
   def self.all
     @@all
   end

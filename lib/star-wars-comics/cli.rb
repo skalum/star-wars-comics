@@ -28,9 +28,26 @@ class StarWarsComics::CLI
 
     puts "Welcome to Star Wars Comics! Getting all the series..."
     StarWarsComics::Scraper::scrape_series("/wiki/Category:Canon_comics")
-    puts "Done! Listing...\n\n"
-    sleep(2)
-    self.list_all_series
+    puts "Done!"
+
+    loop do
+      puts "\nWould you like to list series (fast) or by artist (will need additional download)?"
+      puts "Or, type \"exit\" to quit."
+      input = gets.strip
+      input.downcase!
+
+      if input == "exit" || input == "quit"
+        exit
+      elsif input.include?("series")
+        list_all_series
+      elsif input.include?("artist")
+        list_all_artists
+      else
+        puts "\nPlease enter \"series,\" \"artist,\" or \"exit.\""
+        sleep(2)
+      end
+    end
+
   end
 
   def list_all_series
@@ -38,6 +55,9 @@ class StarWarsComics::CLI
     puts "|:..                                                             ``:::%%%%%%HH|"
     puts "|%%%:::::..           C o m i c    B o o k    S e r i e s           `:::::%%%%|"
     puts "|HH%%%%%:::::.....______________________________________________________::::::|\n\n"
+
+    sleep(1)
+
     StarWarsComics::Series.all.each_with_index do |series, i|
       puts "#{i+1}. #{series.name}"
     end
@@ -111,6 +131,59 @@ class StarWarsComics::CLI
     puts "\nPress \[Enter\] to return to the previous menu."
     gets
   end
+
+  def list_all_artists
+    puts " _____________________________________________________________________________ "
+    puts "|:..                                                             ``:::%%%%%%HH|"
+    puts "|%%%:::::..          C o m i c    B o o k    A r t i s t s          `:::::%%%%|"
+    puts "|HH%%%%%:::::.....______________________________________________________::::::|\n\n"
+    puts "Downloading all artist info. This could take a while..."
+
+    StarWarsComics::Series.all.each do |series|
+      StarWarsComics::Scraper.scrape_issues(series) if series.issues.empty?
+    end
+
+    StarWarsComics::Artist.sort_alpha
+
+    puts "Done! Listing...\n\n"
+    sleep(2)
+
+    StarWarsComics::Artist.all.each_with_index do |artist, i|
+      puts "#{i+1}. #{artist.name}"
+    end
+
+    loop do
+      input = get_input("an artist", 1, StarWarsComics::Artist.all.length)
+
+      if input.class == Integer
+        show_info_for_artist(StarWarsComics::Artist.all[input-1])
+        list_all_artists
+        break
+      elsif input == "back"
+        break
+      elsif StarWarsComics::Artist.find_by_name(input) != nil
+        show_info_for_artist(StarWarsComics::Artist.find_by_name(input))
+        list_all_artists
+        break
+      else
+        puts "Could not find an artist with that name. Please try again!"
+        sleep(1)
+      end
+    end
+
+  end
+
+  def show_info_for_artist(artist)
+    puts "Artist: #{artist.name}"
+    puts "  Artist type: #{artist.class}".gsub("StarWarsComics::Artists::", "")
+    puts "  Issues:"
+
+    artist.issues.each {|issue| puts "    #{issue.name}"}
+
+    puts "\nPress \[Enter\] to return to the previous menu."
+    gets
+  end
+
 
   def get_input(picking, min, max)
     puts "\nPick #{picking}--please enter by number or name. Type \"exit\" to quit."
