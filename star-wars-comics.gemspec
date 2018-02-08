@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.description = "Much longer explanation coming soon..."
   s.authors     = ["Sam Kalum"]
   s.email       = 'stkalum@gmail.com'
-  s.files       = ["lib/star-wars-comics.rb", "lib/star-wars-comics/artist.rb", "lib/star-wars-comics/artists.rb", "lib/star-wars-comics/cli.rb", "lib/star-wars-comics/issue.rb", "lib/star-wars-comics/scraper.rb", "lib/star-wars-comics/series.rb", "lib/star-wars-comics/version.rb", "lib/star-wars-comics/concerns/memorable.rb", "lib/star-wars-comics/concerns/findable.rb", ]
+  s.files       = ["lib/star-wars-comics.rb", "lib/star-wars-comics/artist.rb", "lib/star-wars-comics/artists.rb", "lib/star-wars-comics/cli.rb", "lib/star-wars-comics/issue.rb", "lib/star-wars-comics/scraper.rb", "lib/star-wars-comics/series.rb", "lib/star-wars-comics/version.rb", "lib/star-wars-comics/concerns/findable.rb", ]
   s.metadata    = { "source_code_uri" => "https://github.com/skalum/star-wars-comics" }
   s.executables << 'star-wars-comics'
 end
