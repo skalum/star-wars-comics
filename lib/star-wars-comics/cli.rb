@@ -66,7 +66,7 @@ class StarWarsComics::CLI
       input = get_input("a series", 1, StarWarsComics::Series.all.length)
 
       if input.class == Integer
-        list_issues_for_series(StarWarsComics::Series.all[input-1])
+        list_issues_for_series(StarWarsComics::Series.find(input))
         list_all_series
         break
       elsif input == "back"
@@ -101,7 +101,7 @@ class StarWarsComics::CLI
       input = get_input("an issue", 1, series.issues.length)
 
       if input.class == Integer
-        show_info_for_issue(series.issues[input-1])
+        show_info_for_issue(series.issues.find(input))
         list_issues_for_series(series)
         break
       elsif input == "back"
@@ -156,7 +156,7 @@ class StarWarsComics::CLI
       input = get_input("an artist", 1, StarWarsComics::Artist.all.length)
 
       if input.class == Integer
-        show_info_for_artist(StarWarsComics::Artist.all[input-1])
+        show_info_for_artist(StarWarsComics::Artist.find(input))
         list_all_artists
         break
       elsif input == "back"

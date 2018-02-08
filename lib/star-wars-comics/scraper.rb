@@ -1,18 +1,21 @@
 class StarWarsComics::Scraper
 
-  def self.scrape_series(path)
+  def self.scrape_series(path, all_series)
     categories = Nokogiri::HTML(open(BASE_PATH + path)).css("div.CategoryTreeItem a")
 
     categories.each do |category|
-      self.scrape_series(category["href"]) unless self.dont_include(category)
+      self.scrape_series(category["href"], all_series) unless self.dont_include(category)
     end
 
     series_link = Nokogiri::HTML(open(BASE_PATH + path)).css("div#mw-pages div a").first
 
     unless series_link == nil
-      series = StarWarsComics::Series.find_or_create_by_name(series_link.text, series_link["href"])
+      series = StarWarsComics::Series.new(series_link.text, series_link["href"])
       series.desc = Nokogiri::HTML(open(BASE_PATH + series.path)).css("div#mw-content-text p").first.text.sub(/\[.*\]/, "")
+      all_series << series
     end
+
+    all_series
   end
 
   def self.scrape_issues(series)
@@ -20,7 +23,7 @@ class StarWarsComics::Scraper
 
     last_issue = nil
     issues.each do |issue_link|
-      issue = StarWarsComics::Issue.find_or_create_by_name(issue_link["title"], issue_link["href"])
+      issue = StarWarsComics::Issue.new(issue_link["title"], issue_link["href"])
       issue.series = series
       issue.last_issue = last_issue
       issue.last_issue.next_issue = issue unless last_issue == nil

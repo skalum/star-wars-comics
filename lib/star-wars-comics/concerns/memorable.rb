@@ -10,7 +10,7 @@ module Concerns::Memorable
     end
 
     def destroy_all
-      self.all.clear
+      @@all.clear
     end
 
   end
@@ -18,12 +18,12 @@ module Concerns::Memorable
   module InstanceMethods
 
     def initialize(name, path)
-      self.name = name
-      self.path = path
+      @name = name
+      @path = path
     end
 
     def save
-      self.class.all << self
+      @@all << self
     end
 
     def add_issue(issue)
