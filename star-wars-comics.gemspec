@@ -2,7 +2,7 @@ require_relative './lib/star-wars-comics/version'
 
 Gem::Specification.new do |s|
   s.name        = 'star-wars-comics'
-  s.version     = 'StarWarsComics::VERSION'
+  s.version     = StarWarsComics::VERSION
   s.licenses    = ['MIT']
   s.summary     = "CLI for info about canon Star Wars comics"
   s.description = "Much longer explanation coming soon..."
