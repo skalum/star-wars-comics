@@ -1,7 +1,4 @@
 class StarWarsComics::Issue
-  include Concerns::Memorable::InstanceMethods
-  extend Concerns::Memorable::ClassMethods
-
   extend Concerns::Findable
 
   attr_accessor :name, :path, :pub_date, :pages, :next_issue, :last_issue
@@ -10,8 +7,9 @@ class StarWarsComics::Issue
 
   @@all = []
 
-  def initialize(name, path)
-    super
+  def initialize(name = nil, path = nil)
+    @name = name
+    @path = path
     @writer = nil
     @penciller = nil
     @letterer = nil
@@ -44,6 +42,10 @@ class StarWarsComics::Issue
   def colorist=(colorist)
     @colorist = colorist
     colorist.add_issue(self)
+  end
+
+  def add_issue(issue)
+    self.issues << issue unless self.issues.include?(issue)
   end
 
   def self.all

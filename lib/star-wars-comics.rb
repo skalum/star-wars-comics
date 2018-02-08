@@ -8,7 +8,6 @@ end
 module Concerns
 end
 
-require_relative 'star-wars-comics/concerns/memorable.rb'
 require_relative 'star-wars-comics/concerns/findable.rb'
 
 require_relative 'star-wars-comics/artist.rb'

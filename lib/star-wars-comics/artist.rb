@@ -1,22 +1,20 @@
 class StarWarsComics::Artist
-  include Concerns::Memorable::InstanceMethods
-  extend Concerns::Memorable::ClassMethods
-
   extend Concerns::Findable
 
   attr_accessor :name, :issues, :path
 
   @@all = []
 
-  def initialize(name, path = "")
-    super
+  def initialize(name = "", path = "")
+    @name = name
+    @path = path
     @issues = []
   end
 
   def add_issue(issue)
     artist_var = self.class.to_s.sub("StarWarsComics::Artists::", "").downcase
     issue.send("#{artist_var}") || issue.send("#{artist_var}=", self)
-    super
+    self.issues << issue unless self.issues.include?(issue)
   end
 
   def frequent_collaborators

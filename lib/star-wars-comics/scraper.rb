@@ -23,7 +23,7 @@ class StarWarsComics::Scraper
 
     last_issue = nil
     issues.each do |issue_link|
-      issue = StarWarsComics::Issue.new(issue_link["title"], issue_link["href"])
+      issue = StarWarsComics::Issue.find_or_create_by_name(issue_link["title"], issue_link["href"])
       issue.series = series
       issue.last_issue = last_issue
       issue.last_issue.next_issue = issue unless last_issue == nil

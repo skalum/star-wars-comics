@@ -27,7 +27,7 @@ class StarWarsComics::CLI
     puts "                 .                                   .            ."
 
     puts "Welcome to Star Wars Comics! Getting all the series..."
-    StarWarsComics::Scraper::scrape_series("/wiki/Category:Canon_comics")
+    StarWarsComics::Series.all
     puts "Done!"
 
     loop do
@@ -101,7 +101,7 @@ class StarWarsComics::CLI
       input = get_input("an issue", 1, series.issues.length)
 
       if input.class == Integer
-        show_info_for_issue(series.issues.find(input))
+        show_info_for_issue(series.issues[input-1])
         list_issues_for_series(series)
         break
       elsif input == "back"

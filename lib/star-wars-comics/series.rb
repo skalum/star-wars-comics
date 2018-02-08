@@ -1,7 +1,4 @@
 class StarWarsComics::Series
-  include Concerns::Memorable::InstanceMethods
-  extend Concerns::Memorable::ClassMethods
-
   extend Concerns::Findable
 
   attr_accessor :name, :start_date, :end_date, :status, :stories, :path,
