@@ -20,7 +20,7 @@ To run the development version of the CLI run `bundle exec bin/star-wars-comics`
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/skaspick/star-wars-comics. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/skalum/star-wars-comics. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 
 ## License
