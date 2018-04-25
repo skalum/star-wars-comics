@@ -195,7 +195,7 @@ class StarWarsComics::CLI
         exit
       elsif input.to_i.between?(min, max)
         return input.to_i
-      elsif !input.match?(/0+/) && input.to_i == 0
+      elsif !input.match(/0+/) && input.to_i == 0
         return input
       else
         puts "Please enter a name, a number between #{min} and #{max}, or type \"exit.\""
