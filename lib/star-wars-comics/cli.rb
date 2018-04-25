@@ -65,7 +65,7 @@ class StarWarsComics::CLI
     loop do
       input = get_input("a series", 1, StarWarsComics::Series.all.length)
 
-      if input.class == Integer
+      if input.class == Fixnum
         list_issues_for_series(StarWarsComics::Series.find(input))
         list_all_series
         break
