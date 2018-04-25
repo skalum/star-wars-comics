@@ -9,6 +9,7 @@ class StarWarsComics::Artist
     @name = name
     @path = path
     @issues = []
+    @@all << self
   end
 
   def add_issue(issue)

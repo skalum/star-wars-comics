@@ -17,6 +17,7 @@ class StarWarsComics::Issue
     @next_issue = nil
     @last_issue = nil
     StarWarsComics::Scraper.scrape_issue_info(self)
+    @@all << self
   end
 
   def series=(series)
@@ -42,10 +43,6 @@ class StarWarsComics::Issue
   def colorist=(colorist)
     @colorist = colorist
     colorist.add_issue(self)
-  end
-
-  def add_issue(issue)
-    self.issues << issue unless self.issues.include?(issue)
   end
 
   def self.all

@@ -186,7 +186,7 @@ class StarWarsComics::CLI
 
 
   def get_input(picking, min, max)
-    puts "\nPick #{picking}--please enter by number or name. Type \"exit\" to quit."
+    puts "\nPick #{picking}--please enter by number or name. Type \"back\" to go back or \"exit\ to quit."
 
     loop do
       input = gets.strip
