@@ -100,7 +100,7 @@ class StarWarsComics::CLI
     loop do
       input = get_input("an issue", 1, series.issues.length)
 
-      if input.class == Integer
+      if input.class == Fixnum
         show_info_for_issue(series.issues[input-1])
         list_issues_for_series(series)
         break
@@ -155,7 +155,7 @@ class StarWarsComics::CLI
     loop do
       input = get_input("an artist", 1, StarWarsComics::Artist.all.length)
 
-      if input.class == Integer
+      if input.class == Fixnum
         show_info_for_artist(StarWarsComics::Artist.find(input))
         list_all_artists
         break
